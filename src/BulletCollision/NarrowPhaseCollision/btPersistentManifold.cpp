@@ -211,30 +211,43 @@ int btPersistentManifold::getCacheEntry(const btManifoldPoint& newPoint) const
 
 int btPersistentManifold::addManifoldPoint(const btManifoldPoint& newPoint, bool isPredictive)
 {
+  printf("btPersistentManifold::addManifoldPoint  \n");
 	if (!isPredictive)
 	{
 		btAssert(validContactDistance(newPoint));
 	}
 
-	int insertIndex = getNumContacts();
-	if (insertIndex == MANIFOLD_CACHE_SIZE)
-	{
-#if MANIFOLD_CACHE_SIZE >= 4
-		//sort cache so best points come first, based on area
-		insertIndex = sortCachedPoints(newPoint);
-#else
-		insertIndex = 0;
-#endif
-		clearUserCache(m_pointCache[insertIndex]);
-	}
-	else
-	{
-		m_cachedPoints++;
-	}
+// 	int insertIndex = getNumContacts();
+//   printf("insertIndex = %i \n", insertIndex);
+  
+// 	if (insertIndex == MANIFOLD_CACHE_SIZE)
+// 	{
+// #if MANIFOLD_CACHE_SIZE >= 4
+// 		//sort cache so best points come first, based on area
+// 		insertIndex = sortCachedPoints(newPoint);
+// #else
+// 		insertIndex = 0;
+// #endif
+// 		clearUserCache(m_pointCache[insertIndex]);
+// 	}
+// 	else
+// 	{
+// 		m_cachedPoints++;
+// 	}
+
+  //brute force insertion
+  int insertIndex =  m_cachedPoints;
+  printf("insertIndex = %i \n", insertIndex);
+  m_cachedPoints++;
+  
+  
 	if (insertIndex < 0)
 		insertIndex = 0;
-
+  printf("insertIndex = %i \n", insertIndex);
+  printf("m_cachedPoints = %i \n", m_cachedPoints);
+  printf("getNumContacts() = %i \n", getNumContacts());
 	btAssert(m_pointCache[insertIndex].m_userPersistentData == 0);
+  
 	m_pointCache[insertIndex] = newPoint;
 	return insertIndex;
 }
