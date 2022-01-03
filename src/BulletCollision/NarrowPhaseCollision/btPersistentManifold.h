@@ -100,6 +100,7 @@ public:
 		  m_companionIdB(0),
 		  m_index1a(0)
 	{
+    printf("Create a new btPersistentManifold\n");
 	}
 
 	SIMD_FORCE_INLINE const btCollisionObject* getBody0() const { return m_body0; }
@@ -163,6 +164,8 @@ public:
 
 	void removeContactPoint(int index)
 	{
+    printf("btPersistentManifold::removeContactPoint\n");
+
 		clearUserCache(m_pointCache[index]);
 
 		int lastUsedIndex = getNumContacts() - 1;
@@ -190,7 +193,9 @@ public:
 	}
 	void replaceContactPoint(const btManifoldPoint& newPoint, int insertIndex)
 	{
-		btAssert(validContactDistance(newPoint));
+    printf("btPersistentManifold::replaceContactPoint\n");
+
+    btAssert(validContactDistance(newPoint));
 
 #define MAINTAIN_PERSISTENCY 1
 #ifdef MAINTAIN_PERSISTENCY

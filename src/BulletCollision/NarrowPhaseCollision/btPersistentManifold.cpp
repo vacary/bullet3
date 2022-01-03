@@ -41,6 +41,7 @@ btPersistentManifold::btPersistentManifold()
 	  m_companionIdB(0),
 	  m_index1a(0)
 {
+  printf("Create a new btPersistentManifold\n");
 }
 
 #ifdef DEBUG_PERSISTENCY
@@ -217,28 +218,29 @@ int btPersistentManifold::addManifoldPoint(const btManifoldPoint& newPoint, bool
 		btAssert(validContactDistance(newPoint));
 	}
 
-// 	int insertIndex = getNumContacts();
-//   printf("insertIndex = %i \n", insertIndex);
+	int insertIndex = getNumContacts();
+  printf("insertIndex (getNumContacts) = %i \n", insertIndex);
   
-// 	if (insertIndex == MANIFOLD_CACHE_SIZE)
-// 	{
-// #if MANIFOLD_CACHE_SIZE >= 4
-// 		//sort cache so best points come first, based on area
-// 		insertIndex = sortCachedPoints(newPoint);
-// #else
-// 		insertIndex = 0;
-// #endif
-// 		clearUserCache(m_pointCache[insertIndex]);
-// 	}
-// 	else
-// 	{
-// 		m_cachedPoints++;
-// 	}
+	if (insertIndex == MANIFOLD_CACHE_SIZE)
+	{
+#if MANIFOLD_CACHE_SIZE >= 4
+		//sort cache so best points come first, based on area
+		insertIndex = sortCachedPoints(newPoint);
+#else
+		insertIndex = 0;
+#endif
+		clearUserCache(m_pointCache[insertIndex]);
+	}
+	else
+	{
+		m_cachedPoints++;
+	}
 
-  //brute force insertion
-  int insertIndex =  m_cachedPoints;
-  printf("insertIndex = %i \n", insertIndex);
-  m_cachedPoints++;
+ 
+  // //brute force insertion VA modifs
+  // int insertIndex =  m_cachedPoints;
+  // printf("insertIndex = %i \n", insertIndex);
+  // m_cachedPoints++;
   
   
 	if (insertIndex < 0)
