@@ -49,7 +49,7 @@ enum btContactManifoldTypes
 	BT_PERSISTENT_MANIFOLD_TYPE
 };
 
-#define MANIFOLD_CACHE_SIZE 40
+#define MANIFOLD_CACHE_SIZE 4
 
 ///btPersistentManifold is a contact point cache, it stays persistent as long as objects are overlapping in the broadphase.
 ///Those contact points are created by the collision narrow phase.
@@ -252,6 +252,7 @@ public:
 
 	SIMD_FORCE_INLINE void clearManifold()
 	{
+    printf("btPersistentManifold clearManifold\n");
 		int i;
 		for (i = 0; i < m_cachedPoints; i++)
 		{
@@ -269,6 +270,7 @@ public:
 	const char* serialize(const class btPersistentManifold* manifold, void* dataBuffer, class btSerializer* serializer) const;
 	void deSerialize(const struct btPersistentManifoldDoubleData* manifoldDataPtr);
 	void deSerialize(const struct btPersistentManifoldFloatData* manifoldDataPtr);
+
 };
 
 // clang-format off

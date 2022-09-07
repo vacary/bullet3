@@ -43,16 +43,17 @@ btPersistentManifold::btPersistentManifold()
 {
   printf("Create a new btPersistentManifold\n");
 }
-
+//#define DEBUG_PERSISTENCY
 #ifdef DEBUG_PERSISTENCY
 #include <stdio.h>
+
 void btPersistentManifold::DebugPersistency()
 {
 	int i;
 	printf("DebugPersistency : numPoints %d\n", m_cachedPoints);
 	for (i = 0; i < m_cachedPoints; i++)
 	{
-		printf("m_pointCache[%d].m_userPersistentData = %x\n", i, m_pointCache[i].m_userPersistentData);
+		printf("m_pointCache[%d].m_userPersistentData = %p\n", i, m_pointCache[i].m_userPersistentData);
 	}
 }
 #endif  //DEBUG_PERSISTENCY
@@ -192,8 +193,10 @@ int btPersistentManifold::sortCachedPoints(const btManifoldPoint& pt)
 
 int btPersistentManifold::getCacheEntry(const btManifoldPoint& newPoint) const
 {
+  printf("\nbtPersistentManifold::getCacheEntry start \n");
 	btScalar shortestDist = getContactBreakingThreshold() * getContactBreakingThreshold();
 	int size = getNumContacts();
+  printf("size (getNumContacts) = %i \n", size);
 	int nearestPoint = -1;
 	for (int i = 0; i < size; i++)
 	{
@@ -207,6 +210,8 @@ int btPersistentManifold::getCacheEntry(const btManifoldPoint& newPoint) const
 			nearestPoint = i;
 		}
 	}
+  printf("nearestPoint = %i \n", nearestPoint);
+  printf("btPersistentManifold::getCacheEntry end  \n");
 	return nearestPoint;
 }
 

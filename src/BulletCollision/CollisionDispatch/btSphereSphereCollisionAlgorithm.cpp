@@ -45,6 +45,8 @@ void btSphereSphereCollisionAlgorithm::processCollision(const btCollisionObjectW
 {
 	(void)dispatchInfo;
 
+  printf("btSphereSphereCollisionAlgorithm::processCollision \n");
+
 	if (!m_manifoldPtr)
 		return;
 
@@ -59,12 +61,17 @@ void btSphereSphereCollisionAlgorithm::processCollision(const btCollisionObjectW
 	btScalar radius1 = sphere1->getRadius();
 
 #ifdef CLEAR_MANIFOLD
-	m_manifoldPtr->clearManifold();  //don't do this, it disables warmstarting
+	//m_manifoldPtr->clearManifold();  //don't do this, it disables warmstarting
 #endif
 
+  printf("btSphereSphereCollisionAlgorithm::processCollision  -- len   = %e \n", len);
+  printf("btSphereSphereCollisionAlgorithm::processCollision  -- radius0   = %e \n", radius0);
+  printf("btSphereSphereCollisionAlgorithm::processCollision  -- radius1   = %e \n", radius1);
+  printf("btSphereSphereCollisionAlgorithm::processCollision  -- resultOut->m_closestPointDistanceThreshold   = %e \n", resultOut->m_closestPointDistanceThreshold);
 	///iff distance positive, don't generate a new contact
 	if (len > (radius0 + radius1 + resultOut->m_closestPointDistanceThreshold))
 	{
+    printf("/iff distance positive, don't generate a new contact \n");
 #ifndef CLEAR_MANIFOLD
 		resultOut->refreshContactPoints();
 #endif  //CLEAR_MANIFOLD
@@ -72,7 +79,7 @@ void btSphereSphereCollisionAlgorithm::processCollision(const btCollisionObjectW
 	}
 	///distance (negative means penetration)
 	btScalar dist = len - (radius0 + radius1);
-
+ 
 	btVector3 normalOnSurfaceB(1, 0, 0);
 	if (len > SIMD_EPSILON)
 	{

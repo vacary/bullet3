@@ -104,13 +104,19 @@ btManifoldResult::btManifoldResult(const btCollisionObjectWrapper* body0Wrap, co
 
 void btManifoldResult::addContactPoint(const btVector3& normalOnBInWorld, const btVector3& pointInWorld, btScalar depth)
 {
+  printf("btManifoldResult::addContactPoint\n");
+  
 	btAssert(m_manifoldPtr);
 	//order in manifold needs to match
 
 	if (depth > m_manifoldPtr->getContactBreakingThreshold())
+  {
+    printf("m_manifoldPtr->getContactBreakingThreshold() =%e\n", m_manifoldPtr->getContactBreakingThreshold());
+    printf("depth > m_manifoldPtr->getContactBreakingThreshold()\n");
+    printf("do nothing\n");
 		//	if (depth > m_manifoldPtr->getContactProcessingThreshold())
 		return;
-
+  }
 	bool isSwapped = m_manifoldPtr->getBody0() != m_body0Wrap->getCollisionObject();
 	bool isNewCollision = m_manifoldPtr->getNumContacts() == 0;
 
@@ -173,6 +179,7 @@ void btManifoldResult::addContactPoint(const btVector3& normalOnBInWorld, const 
 		newPt.m_index1 = m_index1;
 	}
 	//printf("depth=%f\n",depth);
+  printf("insertIndex before: %i\n ", insertIndex);
 	///@todo, check this for any side effects
 	if (insertIndex >= 0)
 	{
@@ -183,7 +190,8 @@ void btManifoldResult::addContactPoint(const btVector3& normalOnBInWorld, const 
 	{
 		insertIndex = m_manifoldPtr->addManifoldPoint(newPt);
 	}
-
+  printf("insertIndex : %i\n ", insertIndex);
+  
 	//User can override friction and/or restitution
 	if (gContactAddedCallback &&
 		//and if either of the two bodies requires custom material
