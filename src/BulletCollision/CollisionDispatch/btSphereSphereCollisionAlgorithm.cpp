@@ -59,7 +59,7 @@ void btSphereSphereCollisionAlgorithm::processCollision(const btCollisionObjectW
 	btScalar radius1 = sphere1->getRadius();
 
 #ifdef CLEAR_MANIFOLD
-	m_manifoldPtr->clearManifold();  //don't do this, it disables warmstarting
+	//m_manifoldPtr->clearManifold();  //don't do this, it disables warmstarting
 #endif
 
 	///iff distance positive, don't generate a new contact
