@@ -804,7 +804,7 @@ void btGImpactCollisionAlgorithm::gimpact_vs_concave(
 
 void btGImpactCollisionAlgorithm::processCollision(const btCollisionObjectWrapper* body0Wrap, const btCollisionObjectWrapper* body1Wrap, const btDispatcherInfo& dispatchInfo, btManifoldResult* resultOut)
 {
-	clearCache();
+	//clearCache();
 
 	m_resultOut = resultOut;
 	m_dispatchInfo = &dispatchInfo;
